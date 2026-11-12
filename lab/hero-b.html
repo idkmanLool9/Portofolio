@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Name · Roblox Developer</title>
+  <meta name="description" content="Roblox developer for scripting, building, modeling and UI. Open for commissions.">
+  <meta name="theme-color" content="#f2f0ea">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/fonts/fonts.css">
+  <style>
+    /*
+      Hero B: type-led editorial, light.
+      One ink, one paper, one rule. The headline is sized from the grid so
+      that "developer" and "for hire." both start on column 5 (the axis),
+      and everything else either sits on the rule under it or hangs from it.
+    */
+    :root {
+      --ink: #1b28bd;
+      --paper: #f2f0ea;
+      --soft: rgba(27, 40, 189, 0.6);
+      --rule: rgba(27, 40, 189, 0.22);
+      --m: clamp(20px, 2.78vw, 56px);
+      --g: clamp(12px, 1.67vw, 32px);
+      /* Small type scales gently with the viewport; values are exact at 1440. */
+      --t-xs: clamp(10px, 0.7vw, 13px);
+      --t-s: clamp(13px, 0.9vw, 16px);
+      --t-n: clamp(14px, 0.972vw, 18px);
+      --t-b: clamp(15px, 1.042vw, 19px);
+      --t-l: clamp(15px, 1.18vw, 22px);
+      --t-xl: clamp(19px, 1.46vw, 28px);
+      --row: clamp(48px, 3.89vw, 72px);
+      --nav-h: clamp(64px, 5vw, 96px);
+      --ease: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+      font-size: var(--t-b);
+      line-height: 1.45;
+      font-weight: 420;
+      font-stretch: 100%;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+    h1, p, ul { margin: 0; padding: 0; font-weight: inherit; }
+    ul { list-style: none; }
+    ::selection { background: var(--ink); color: var(--paper); }
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+    .soft { color: var(--soft); }
+    .num { font-variant-numeric: tabular-nums; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--g);
+    }
+
+    /* Underline that draws in from the left on hover. */
+    .u {
+      background: linear-gradient(currentColor, currentColor) no-repeat 100% 100% / 0 1px;
+      transition: background-size 480ms var(--ease);
+      padding-bottom: 0.12em;
+    }
+
+    .arrow { width: 0.74em; height: 0.74em; flex: none; }
+
+    /* ---------- Nav ---------- */
+
+    .nav {
+      position: relative;
+      z-index: 5;
+      margin: 0 var(--m);
+      height: var(--nav-h);
+      align-content: center;
+      align-items: baseline;
+      font-size: var(--t-n);
+      font-weight: 480;
+    }
+
+    .nav__name {
+      grid-column: 1 / span 4;
+      justify-self: start;
+      font-weight: 640;
+      font-size: var(--t-b);
+      letter-spacing: -0.005em;
+    }
+
+    .nav__links {
+      grid-column: 5 / span 5;
+      display: flex;
+      gap: clamp(22px, 2.5vw, 48px);
+    }
+
+    .nav__links sup,
+    .idx {
+      font-size: var(--t-xs);
+      font-weight: 500;
+      color: var(--soft);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
+    }
+
+    .nav__links sup { margin-right: 0.45em; vertical-align: 0.6em; }
+
+    .nav__cta {
+      grid-column: 10 / -1;
+      justify-self: end;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65em;
+      font-weight: 560;
+    }
+
+    .nav__cta .u { background-size: 100% 1px; }
+
+    .nav__menu { display: none; }
+    .sheet { display: none; }
+
+    @media (hover: hover) and (pointer: fine) {
+      .nav__links a:hover .u,
+      .disc a:hover .u { background-size: 100% 1px; background-position: 0 100%; }
+      .nav__cta:hover .u { background-size: 0 1px; }
+    }
+
+    /* ---------- Hero ---------- */
+
+    .hero {
+      container-type: inline-size;
+      min-height: calc(100vh - var(--nav-h));
+      min-height: calc(100svh - var(--nav-h));
+      margin: 0 var(--m);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero__main {
+      --W: calc(100vw - 2 * var(--m));
+      --col: calc((var(--W) - 11 * var(--g)) / 12);
+      /* 2.8405em is the distance from the R to the d at this width and weight,
+         so the headline size is whatever puts "developer" on column 5. */
+      --F: calc((4 * var(--col) + 4 * var(--g)) / 2.8405);
+      flex: 1;
+      align-content: end;
+      padding-top: 40px;
+    }
+
+    /* Measure the real column, without the scrollbar, where supported. */
+    @supports (width: 1cqw) {
+      .hero__main { --W: 100cqw; }
+    }
+
+    .hl {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      font-size: var(--F);
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      font-weight: 520;
+      font-stretch: 90%;
+      margin-left: -0.074em; /* optical: R stem on the margin */
+    }
+
+    .hl .ln { display: block; white-space: nowrap; }
+    .hl .ln + .ln { padding-left: 2.9045em; } /* f stem under the d stem */
+
+    .lede {
+      grid-column: 1 / span 3;
+      grid-row: 1;
+      align-self: end;
+      font-size: var(--t-l);
+      line-height: 1.4;
+      letter-spacing: -0.006em;
+      text-wrap: pretty;
+      margin-bottom: calc(var(--F) * 0.13 - 0.42em); /* last baseline on the headline baseline */
+    }
+
+    .lede b { font-weight: 600; }
+
+    /* ---------- Under the rule ---------- */
+
+    .info {
+      border-top: 1px solid var(--ink);
+      padding-bottom: calc(var(--m) * 1.2);
+      align-items: start;
+    }
+
+    .avail {
+      grid-column: 1 / span 3;
+      padding-top: calc(var(--row) * 0.36);
+      line-height: 1.45;
+    }
+
+    .avail p:first-child { font-weight: 560; }
+
+    .disc { grid-column: 5 / span 4; }
+
+    .disc a {
+      display: grid;
+      grid-template-columns: 2.6em 1fr auto;
+      align-items: baseline;
+      height: var(--row);
+      padding-top: calc(var(--row) * 0.34);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .disc .idx { font-size: var(--t-xs); }
+    .disc b { font-weight: 480; font-size: var(--t-xl); line-height: 1; letter-spacing: -0.02em; justify-self: start; }
+    .disc i { font-style: normal; font-size: var(--t-s); color: var(--soft); }
+
+    .cta {
+      grid-column: 10 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--row);
+      padding: 0 1.2em 0 1.33em;
+      background: var(--ink);
+      color: var(--paper);
+      font-weight: 560;
+      font-size: var(--t-b);
+    }
+
+    .cta .arrow { transition: transform 480ms var(--ease); }
+
+    @media (hover: hover) and (pointer: fine) {
+      .cta:hover .arrow { transform: translateX(4px); }
+    }
+
+    /* ---------- The one moment: the headline sets itself ---------- */
+    /* Each line arrives condensed and light, then opens up to its final
+       width and weight, which carries "developer" onto the axis. */
+
+    .js .hl .ln { opacity: 0; }
+
+    .is-set .hl .ln {
+      animation: set 1900ms var(--ease) both, show 360ms linear both;
+      animation-delay: calc(var(--i) * 120ms + 60ms);
+    }
+
+    @keyframes set {
+      from { font-stretch: 62%; font-weight: 220; }
+      to { font-stretch: 90%; font-weight: 520; }
+    }
+
+    @keyframes show {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .js .hl .ln { opacity: 1; }
+      .is-set .hl .ln { animation: none; }
+    }
+
+    /* ---------- Tablet and phone ---------- */
+
+    @media (max-width: 1023px) {
+      :root { --nav-h: 60px; --row: 46px; }
+
+      .nav__links, .nav__cta { display: none; }
+      .nav__name { grid-column: 1 / span 8; }
+      .nav__menu { display: block; grid-column: 9 / -1; justify-self: end; font-weight: 560; font-size: 15px; }
+
+      .sheet {
+        position: fixed;
+        inset: var(--nav-h) 0 0 0;
+        z-index: 4;
+        display: block;
+        padding: 0 var(--m) 28px;
+        background: var(--paper);
+        overflow-y: auto;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 240ms ease, visibility 0s linear 240ms;
+      }
+      .is-open .sheet { visibility: visible; opacity: 1; transition: opacity 240ms ease; }
+      .sheet a {
+        display: flex;
+        align-items: baseline;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--rule);
+        font-size: 28px;
+        letter-spacing: -0.02em;
+        font-weight: 480;
+      }
+      .sheet a:first-child { border-top: 1px solid var(--ink); }
+      .sheet a sup { font-size: 10px; color: var(--soft); width: 3.6em; font-variant-numeric: tabular-nums; }
+      .sheet .cta { margin-top: 24px; align-items: center; font-size: 15px; letter-spacing: 0; border: 0; padding: 0 18px 0 20px; height: 54px; }
+      html.is-open, html.is-open body { overflow: hidden; }
+
+      .hero__main { padding: 36px 0 28px; row-gap: 22px; }
+      .lede { grid-row: 2; margin: 0; font-size: 16.5px; max-width: 26em; }
+
+      .avail { padding: 18px 0 16px; }
+      .disc a { padding-top: 14px; }
+      .disc .idx { font-size: 10px; }
+      .disc b { font-size: 21px; }
+      .disc i { font-size: 13px; }
+      .cta { height: 54px; font-size: 15px; padding: 0 18px 0 20px; }
+    }
+
+    @media (min-width: 641px) and (max-width: 1023px) {
+      .hero__main { align-content: end; }
+      .lede { grid-column: 1 / span 6; }
+      .disc { grid-column: 1 / span 7; grid-row: 1 / span 2; }
+      .avail { grid-column: 9 / -1; grid-row: 1; }
+      .cta { grid-column: 9 / -1; grid-row: 2; }
+    }
+
+    @media (min-width: 641px) and (max-width: 1023px) and (orientation: portrait) {
+      .hero__main { --F: calc(var(--W) / 5.4); align-content: start; padding-top: 56px; }
+      .hl .w { display: block; }
+      .hl .ln + .ln { padding-left: 0; }
+    }
+
+    @media (max-width: 640px) {
+      .hero__main { --F: calc(var(--W) / 4.35); align-content: start; }
+      .hl .w { display: block; }
+      .hl .ln + .ln { padding-left: 0; }
+      .lede { grid-column: 1 / -1; }
+      .disc { grid-column: 1 / -1; grid-row: 1; }
+      .avail { grid-column: 1 / -1; grid-row: 2; }
+      .cta { grid-column: 1 / -1; grid-row: 3; }
+    }
+  </style>
+</head>
+<body>
+  <script>document.documentElement.classList.add("js");</script>
+
+  <header class="nav grid" id="nav">
+    <a class="nav__name" href="#top">Your Name</a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#work"><sup>01</sup><span class="u">Work</span></a>
+      <a href="#services"><sup>02</sup><span class="u">Services</span></a>
+      <a href="#about"><sup>03</sup><span class="u">About</span></a>
+      <a href="#contact"><sup>04</sup><span class="u">Contact</span></a>
+    </nav>
+    <a class="nav__cta" href="#contact"><span class="u">Get in touch</span></a>
+    <button class="nav__menu" type="button" aria-expanded="false" aria-controls="sheet">Menu</button>
+    <nav class="sheet" id="sheet" aria-label="Menu">
+      <a href="#work"><sup>01</sup>Work</a>
+      <a href="#services"><sup>02</sup>Services</a>
+      <a href="#about"><sup>03</sup>About</a>
+      <a href="#contact"><sup>04</sup>Contact</a>
+      <a class="cta" href="#contact"><span>Get in touch</span>
+        <svg class="arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 6h10M6.5 1.5L11 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+      </a>
+    </nav>
+  </header>
+
+  <main id="top" class="hero">
+    <section class="hero__main grid" aria-labelledby="hl">
+      <h1 class="hl" id="hl">
+        <span class="ln" style="--i:0"><span class="w">Roblox</span> <span class="w">developer</span></span>
+        <span class="ln" style="--i:1"><span class="w">for hire.</span></span>
+      </h1>
+      <p class="lede"><b>I&rsquo;m Your Name.</b> I make Roblox games from the first script to the final menu, or just the part you are missing.</p>
+    </section>
+
+    <section class="info grid" aria-label="Availability and disciplines">
+      <div class="avail">
+        <p>Open for commissions</p>
+        <p class="soft">CET, UTC+1 &middot; <span class="num" data-clock>--:--</span> local time</p>
+      </div>
+      <ul class="disc" aria-label="Disciplines">
+        <li><a href="#services"><span class="idx">01</span><b class="u">Scripting</b><i>Systems, Luau</i></a></li>
+        <li><a href="#services"><span class="idx">02</span><b class="u">Building</b><i>Maps, worlds</i></a></li>
+        <li><a href="#services"><span class="idx">03</span><b class="u">Modeling</b><i>Props, assets</i></a></li>
+        <li><a href="#services"><span class="idx">04</span><b class="u">UI</b><i>Menus, HUDs</i></a></li>
+      </ul>
+      <a class="cta" href="#contact"><span>Start a project</span>
+        <svg class="arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 6h10M6.5 1.5L11 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+      </a>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+
+      // Start the headline only once Archivo is ready, so it never sets in a fallback face.
+      var go = function () { root.classList.add("is-set"); };
+      if (document.fonts && document.fonts.load) {
+        Promise.race([
+          document.fonts.load('520 100px "Archivo"'),
+          new Promise(function (r) { setTimeout(r, 1200); })
+        ]).then(function () { requestAnimationFrame(go); }, go);
+      } else { go(); }
+
+      // Local time in CET.
+      var clock = document.querySelector("[data-clock]");
+      if (clock && window.Intl) {
+        var fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Amsterdam" });
+        var tick = function () { clock.textContent = fmt.format(new Date()); };
+        tick();
+        setInterval(tick, 15000);
+      }
+
+      // Small-screen menu.
+      var nav = document.getElementById("nav");
+      var btn = nav.querySelector(".nav__menu");
+      var setOpen = function (open) {
+        nav.classList.toggle("is-open", open);
+        root.classList.toggle("is-open", open);
+        btn.setAttribute("aria-expanded", String(open));
+        btn.textContent = open ? "Close" : "Menu";
+      };
+      btn.addEventListener("click", function () { setOpen(!nav.classList.contains("is-open")); });
+      nav.querySelectorAll(".sheet a").forEach(function (a) { a.addEventListener("click", function () { setOpen(false); }); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
+    })();
+  </script>
+</body>
+</html>
