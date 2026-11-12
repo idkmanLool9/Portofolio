@@ -1,27 +1,28 @@
 # Portfolio
 
-Drie designrichtingen voor een Roblox-portfolio. Nog zonder werk of persoonlijke info; alle tekst is placeholder.
+Persoonlijke portfolio voor Roblox-werk (scripting, building, modeling, UI). Statische site, geen build stap. Alle projecten en de meeste tekst zijn nog placeholder.
 
-| Map | Richting |
+## Bestanden
+
+| Bestand | Wat |
 | --- | --- |
-| `concepts/01-ledger` | Licht en redactioneel, werk als index |
-| `concepts/02-reel` | Donker en filmisch, serif, grote beeldvlakken |
-| `concepts/03-signal` | Eén inktkleur, naam groot in de hero, projectkaarten |
+| `index.html` | De pagina: hero, work, services, about, contact |
+| `style.css` | Alle styling |
+| `main.js` | Animaties, filters, cursor, klok, hero-overgang |
+| `voxel.js` | Tekent de blok-eilandjes die als tijdelijk beeld dienen |
+| `assets/fonts` | Archivo, lokaal (SIL Open Font License) |
 
-`index.html` in de root is een keuzepagina met previews van alle drie.
+## Aanpassen
+
+- **Naam:** `Your Name` in `index.html` (de grote naam in de hero schaalt zichzelf).
+- **Projecten:** elke `<a class="card">` in de Work-sectie. `data-tags` bepaalt onder welke filters hij valt (`scripting`, `building`, `modeling`, `ui`). Vervang de `vox-host` door een `<img>` zodra er screenshots zijn.
+- **Tijdzone van de klok:** `timeZone` in `main.js`.
+- **Cijfers:** `data-value` op de `.odo` elementen in About.
 
 ## Bekijken
-
-Gewone HTML/CSS/JS, geen build stap. Lokaal openen via een simpele server (fonts laden dan goed):
 
 ```bash
 python3 -m http.server 8000
 ```
 
 Daarna naar `http://localhost:8000`.
-
-## Techniek
-
-- Fonts staan lokaal in `assets/fonts` (Archivo, Newsreader, Martian Mono; SIL Open Font License, zie `assets/fonts/licenses`).
-- Geen frameworks of externe requests.
-- Respecteert `prefers-reduced-motion`.
