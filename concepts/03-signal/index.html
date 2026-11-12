@@ -5,26 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Your Name · Roblox Developer</title>
   <meta name="description" content="Roblox developer, available for hire.">
+  <meta name="theme-color" content="#1f2fd1">
   <link rel="preload" href="../../assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../assets/fonts/fonts.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-theme="ink">
+
+  <div class="cursor" aria-hidden="true"><span class="cursor__label">View</span></div>
 
   <header class="nav">
     <a class="nav__name" href="#top">Your Name</a>
     <nav class="nav__links" aria-label="Primary">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a href="#work"><sup>01</sup>Work</a>
+      <a href="#about"><sup>02</sup>About</a>
+      <a href="#contact"><sup>03</sup>Contact</a>
     </nav>
     <a class="nav__cta" href="#contact">Get in touch</a>
   </header>
 
   <main id="top">
 
-    <section class="hero">
-      <h1 class="hero__name" data-fit><span><span class="w">Your</span> <span class="w">Name</span></span></h1>
+    <section class="hero" data-theme="ink">
+      <div class="hero__top">
+        <div class="hero__meta">
+          <p>Roblox developer</p>
+          <p class="soft">Local time <span data-clock>--:--:--</span></p>
+          <p class="soft">Open for commissions</p>
+        </div>
+
+        <figure class="hero__art" data-cursor="Rebuild">
+          <div class="hero__float">
+            <div class="vox-host" data-vox="ink" data-seed="7" data-n="13" data-h="6"></div>
+          </div>
+          <figcaption>Fig. 01 &middot; Click to rebuild</figcaption>
+        </figure>
+
+        <a class="hero__scroll" href="#work" aria-label="Scroll to work">
+          <span>Scroll</span><i aria-hidden="true"></i>
+        </a>
+      </div>
+
+      <h1 class="hero__name" data-fit data-split>Your Name</h1>
 
       <div class="hero__row">
         <p class="hero__intro"><b>Roblox developer.</b> <span class="soft">A line or two about what you build and who you build it for goes here.</span></p>
@@ -32,78 +54,102 @@
           <div><dt>Status</dt><dd>Open for commissions</dd></div>
           <div><dt>Timezone</dt><dd>CET, UTC+1</dd></div>
         </dl>
-        <a class="btn" href="#contact"><span>Start a project</span></a>
+        <a class="btn" href="#contact"><span>Start a project</span><i aria-hidden="true">&rarr;</i></a>
       </div>
     </section>
 
-    <section class="work" id="work" aria-labelledby="work-title">
-      <header class="sec-head">
-        <h2 id="work-title">Work</h2>
-        <span class="count">(00)</span>
+    <section class="work" id="work" data-theme="paper" aria-labelledby="work-title">
+      <header class="sec-head" data-reveal>
+        <span class="sec-head__i">(01)</span>
+        <h2 id="work-title" class="mask"><span>Work</span></h2>
+        <p class="sec-head__note soft">Selected projects, newest first. Images are placeholders.</p>
       </header>
 
       <div class="cards">
-        <a class="card" href="#">
-          <div class="card__media"><span class="card__n">01</span><span class="card__cap">Image 16:10</span></div>
+        <a class="card" href="#" data-cursor="View" data-reveal>
+          <div class="card__media"><div class="vox-host" data-vox="card" data-seed="3" data-n="11" data-h="5"></div><span class="card__tag">01</span></div>
           <div class="card__row"><h3>Untitled</h3><span>2026</span></div>
-          <p class="card__meta">Role &ndash; &middot; Studio &ndash;</p>
+          <p class="card__meta soft">Role &ndash; &middot; Studio &ndash; &middot; Visits &ndash;</p>
         </a>
-        <a class="card" href="#">
-          <div class="card__media"><span class="card__n">02</span><span class="card__cap">Image 16:10</span></div>
+        <a class="card" href="#" data-cursor="View" data-reveal>
+          <div class="card__media"><div class="vox-host" data-vox="card" data-seed="21" data-n="9" data-h="6"></div><span class="card__tag">02</span></div>
           <div class="card__row"><h3>Untitled</h3><span>2026</span></div>
-          <p class="card__meta">Role &ndash; &middot; Studio &ndash;</p>
+          <p class="card__meta soft">Role &ndash; &middot; Studio &ndash;</p>
         </a>
-        <a class="card" href="#">
-          <div class="card__media"><span class="card__n">03</span><span class="card__cap">Image 16:10</span></div>
+        <a class="card" href="#" data-cursor="View" data-reveal>
+          <div class="card__media"><div class="vox-host" data-vox="card" data-seed="58" data-n="9" data-h="5"></div><span class="card__tag">03</span></div>
           <div class="card__row"><h3>Untitled</h3><span>2025</span></div>
-          <p class="card__meta">Role &ndash; &middot; Studio &ndash;</p>
+          <p class="card__meta soft">Role &ndash; &middot; Studio &ndash;</p>
         </a>
-        <a class="card" href="#">
-          <div class="card__media"><span class="card__n">04</span><span class="card__cap">Image 16:10</span></div>
+        <a class="card" href="#" data-cursor="View" data-reveal>
+          <div class="card__media"><div class="vox-host" data-vox="card" data-seed="90" data-n="12" data-h="5"></div><span class="card__tag">04</span></div>
           <div class="card__row"><h3>Untitled</h3><span>2024</span></div>
-          <p class="card__meta">Role &ndash; &middot; Studio &ndash;</p>
+          <p class="card__meta soft">Role &ndash; &middot; Studio &ndash; &middot; Visits &ndash;</p>
         </a>
       </div>
     </section>
 
-    <section class="numbers" aria-label="In numbers">
-      <div><b>000M</b><span>Visits on games I worked on</span></div>
-      <div><b>00</b><span>Projects shipped</span></div>
-      <div><b>00</b><span>Years on Roblox</span></div>
+    <section class="numbers" data-theme="ink" aria-label="In numbers">
+      <header class="sec-head" data-reveal>
+        <span class="sec-head__i">(02)</span>
+        <h2 class="mask"><span>In numbers</span></h2>
+      </header>
+      <div class="numbers__grid">
+        <div data-reveal><b class="odo" data-value="000M"></b><span class="numbers__label">Visits on games I worked on</span></div>
+        <div data-reveal><b class="odo" data-value="00"></b><span class="numbers__label">Projects shipped</span></div>
+        <div data-reveal><b class="odo" data-value="00"></b><span class="numbers__label">Years on Roblox</span></div>
+      </div>
     </section>
 
-    <section class="about" id="about" aria-labelledby="about-title">
-      <div class="about__img"><span>Avatar or portrait</span></div>
+    <section class="about" id="about" data-theme="paper" aria-labelledby="about-title">
+      <div class="about__img" data-reveal>
+        <div class="vox-host" data-vox="card" data-seed="144" data-n="10" data-h="7"></div>
+        <span>Avatar or portrait goes here</span>
+      </div>
       <div class="about__text">
-        <h2 id="about-title">About</h2>
-        <p class="about__lede soft">A short introduction goes here. How you got into Roblox, what you are best at, and what you are looking for next.</p>
+        <header class="sec-head" data-reveal>
+          <span class="sec-head__i">(03)</span>
+          <h2 id="about-title" class="mask"><span>About</span></h2>
+        </header>
+        <p class="about__lede soft" data-reveal>A short introduction goes here. How you got into Roblox, what you are best at, and what you are looking for next.</p>
         <dl class="about__list">
-          <div><dt>Disciplines</dt><dd class="soft">To be added</dd></div>
-          <div><dt>Tools</dt><dd class="soft">To be added</dd></div>
-          <div><dt>Payment</dt><dd class="soft">To be added</dd></div>
-          <div><dt>Response time</dt><dd class="soft">To be added</dd></div>
+          <div data-reveal><dt>Disciplines</dt><dd class="soft">To be added</dd></div>
+          <div data-reveal><dt>Tools</dt><dd class="soft">To be added</dd></div>
+          <div data-reveal><dt>Payment</dt><dd class="soft">To be added</dd></div>
+          <div data-reveal><dt>Response time</dt><dd class="soft">To be added</dd></div>
         </dl>
       </div>
     </section>
 
-    <section class="contact" id="contact" aria-labelledby="contact-title">
-      <h2 id="contact-title">Have a game<br>in mind?</h2>
+    <section class="contact" id="contact" data-theme="ink" aria-labelledby="contact-title">
+      <header class="sec-head" data-reveal>
+        <span class="sec-head__i">(04)</span>
+        <span class="sec-head__label soft">Contact</span>
+      </header>
+      <h2 id="contact-title" class="contact__title" data-reveal>
+        <span class="mask"><span>Have a game</span></span>
+        <span class="mask"><span>in mind?</span></span>
+      </h2>
       <ul class="contact__rows">
-        <li><a href="#"><span class="k">Discord</span><span class="v">@&ndash;</span><span class="arr" aria-hidden="true">&rarr;</span></a></li>
-        <li><a href="#"><span class="k">Email</span><span class="v">name@domain.com</span><span class="arr" aria-hidden="true">&rarr;</span></a></li>
-        <li><a href="#"><span class="k">Roblox</span><span class="v">@&ndash;</span><span class="arr" aria-hidden="true">&rarr;</span></a></li>
-        <li><a href="#"><span class="k">Talent Hub</span><span class="v">&ndash;</span><span class="arr" aria-hidden="true">&rarr;</span></a></li>
+        <li data-reveal><a href="#"><span class="k">Discord</span><span class="v">@&ndash;</span><span class="arr" aria-hidden="true">&rarr;</span></a></li>
+        <li data-reveal><a href="#"><span class="k">Email</span><span class="v">name@domain.com</span><span class="arr" aria-hidden="true">&rarr;</span></a></li>
+        <li data-reveal><a href="#"><span class="k">Roblox</span><span class="v">@&ndash;</span><span class="arr" aria-hidden="true">&rarr;</span></a></li>
+        <li data-reveal><a href="#"><span class="k">Talent Hub</span><span class="v">&ndash;</span><span class="arr" aria-hidden="true">&rarr;</span></a></li>
       </ul>
     </section>
 
   </main>
 
-  <footer class="foot">
-    <span>&copy; 2026 Your Name</span>
-    <span>Not affiliated with Roblox Corporation</span>
-    <a href="#top">Back to top</a>
+  <footer class="foot" data-theme="ink">
+    <p class="foot__name" data-fit data-split data-reveal aria-hidden="true">Your Name</p>
+    <div class="foot__row">
+      <span>&copy; 2026 Your Name</span>
+      <span class="soft">Not affiliated with Roblox Corporation</span>
+      <a href="#top">Back to top</a>
+    </div>
   </footer>
 
+  <script src="voxel.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
