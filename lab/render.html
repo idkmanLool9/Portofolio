@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Render</title>
+  <style>
+    html, body { margin: 0; background: transparent; }
+    .stage { width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <div class="stage"></div>
+  <script type="module">
+    // Offline helper: renders one island for a static placeholder image.
+    import { createDiorama } from "../diorama.js";
+    const q = new URLSearchParams(location.search);
+    const dio = createDiorama(document.querySelector(".stage"), {
+      seed: Number(q.get("seed") || 7),
+      n: Number(q.get("n") || 12),
+      maxH: Number(q.get("h") || 6),
+      angle: Number(q.get("angle") || -0.35),
+      reduceMotion: true,
+      float: false,
+      focus: () => ({ x: 0.5, y: Number(q.get("y") || 0.5), scale: Number(q.get("scale") || 0.82) }),
+    });
+    setTimeout(() => { window.rendered = !!dio; }, 600);
+  </script>
+</body>
+</html>
