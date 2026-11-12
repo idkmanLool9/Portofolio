@@ -7,41 +7,22 @@
   const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-  /* ---------- Name: split into letters, fit edge to edge ---------- */
+  /* ---------- Mobile menu ---------- */
 
-  const nameEl = document.querySelector("[data-split]");
-  {
-    let i = 0;
-    const words = nameEl.textContent.trim().split(/\s+/).map((w) =>
-      `<span class="w">${[...w].map((c) => `<span class="ch" style="--i:${i++}">${esc(c)}</span>`).join("")}</span>`,
-    );
-    nameEl.innerHTML = `<span class="fit-inner">${words.join(" ")}</span>`;
-  }
-
-  const fitName = () => {
-    const inner = nameEl.querySelector(".fit-inner");
-    const words = [...nameEl.querySelectorAll(".w")];
-    nameEl.style.fontSize = "100px";
-    // On phones each word sits on its own line, so fit the longest word.
-    const stacked = getComputedStyle(words[0]).display === "block";
-    const natural = stacked
-      ? Math.max(...words.map((w) => w.getBoundingClientRect().width))
-      : inner.getBoundingClientRect().width;
-    if (natural > 0) nameEl.style.fontSize = `${((100 * nameEl.clientWidth) / natural) * 0.995}px`;
+  const menuBtn = document.querySelector(".menu-btn");
+  const menu = document.getElementById("menu");
+  const setMenu = (open) => {
+    menuBtn.setAttribute("aria-expanded", String(open));
+    menu.classList.toggle("is-open", open);
   };
-
-  /* ---------- Voxel art ---------- */
-
-  const draw = (host, seed) => {
-    host.innerHTML = window.Voxel.render({
-      n: Number(host.dataset.n) || 10,
-      maxH: Number(host.dataset.h) || 5,
-      seed,
-      pal: window.Voxel.PALETTES[host.dataset.vox],
-    });
-  };
-
-  document.querySelectorAll("[data-vox]").forEach((host) => draw(host, Number(host.dataset.seed)));
+  menuBtn.addEventListener("click", () => setMenu(menuBtn.getAttribute("aria-expanded") !== "true"));
+  menu.addEventListener("click", (e) => { if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && menu.classList.contains("is-open")) {
+      setMenu(false);
+      menuBtn.focus();
+    }
+  });
 
   /* ---------- Odometers ---------- */
 
@@ -82,19 +63,6 @@
   );
 
   document.querySelectorAll("[data-reveal]").forEach((el) => reveal.observe(el));
-
-  /* ---------- Clock ---------- */
-
-  const clock = document.querySelector("[data-clock]");
-  const fmt = new Intl.DateTimeFormat("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    timeZone: "Europe/Amsterdam", // change to your own zone
-  });
-  const tick = () => { clock.textContent = fmt.format(new Date()); };
-  tick();
-  setInterval(tick, 1000);
 
   /* ---------- Work filters ---------- */
 
@@ -165,36 +133,32 @@
     }),
   );
 
-  /* ---------- Hero cover, nav colour, parallax ---------- */
+  /* ---------- Hero cover + nav ---------- */
 
   const nav = document.querySelector(".nav");
   const hero = document.querySelector(".hero");
   const heroInner = hero.querySelector(".hero__inner");
   const shade = hero.querySelector(".hero__shade");
-  const heroArt = hero.querySelector(".hero__art");
-  const heroHost = heroArt.querySelector(".vox-host");
-  const themed = [...document.querySelectorAll("main [data-theme]")];
+  const themed = [...document.querySelectorAll("main section[data-theme], footer[data-theme]")];
   const themeMeta = document.querySelector('meta[name="theme-color"]');
-
-  const m = { x: 0, y: 0, tx: 0, ty: 0 };
   let lastY = window.scrollY;
   let raf = 0;
 
   const setSticky = () => {
-    // Only pin the hero when it fits the screen; a taller hero just scrolls.
+    // Pin the hero only when it fits the screen; a taller hero just scrolls.
     hero.classList.toggle("is-sticky", heroInner.offsetHeight <= innerHeight + 2);
   };
 
   const navTheme = () => {
     const probe = nav.offsetHeight / 2;
-    let theme = "ink";
+    let theme = "paper";
     for (const s of themed) {
       const r = s.getBoundingClientRect();
       if (r.top <= probe && r.bottom > probe) theme = s.dataset.theme; // later sections sit on top
     }
     if (nav.dataset.theme !== theme) {
       nav.dataset.theme = theme;
-      themeMeta.setAttribute("content", theme === "ink" ? "#1f2fd1" : "#f2f0ea");
+      themeMeta.setAttribute("content", theme === "ink" ? "#1c25b0" : "#f2f0ea");
     }
   };
 
@@ -202,21 +166,12 @@
     raf = 0;
     const y = window.scrollY;
     const h = hero.offsetHeight;
-
-    if (!reduce && y < h * 1.1) {
+    if (!reduce && hero.classList.contains("is-sticky") && y < h * 1.1) {
       const p = clamp(y / h, 0, 1);
-      if (hero.classList.contains("is-sticky")) {
-        heroInner.style.transform = `translate3d(0, ${-p * 7}vh, 0) scale(${1 - p * 0.05})`;
-        shade.style.opacity = String(p * 0.6);
-      }
-      m.x += (m.tx - m.x) * 0.06;
-      m.y += (m.ty - m.y) * 0.06;
-      heroArt.style.transform = `translate3d(${m.x * 22}px, ${m.y * 14}px, 0)`;
+      heroInner.style.transform = `translate3d(0, ${-p * 5}vh, 0) scale(${1 - p * 0.04})`;
+      shade.style.opacity = String(p * 0.22);
     }
-
     navTheme();
-
-    if (Math.abs(m.tx - m.x) > 0.001 || Math.abs(m.ty - m.y) > 0.001) raf = requestAnimationFrame(frame);
   };
 
   const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
@@ -224,7 +179,7 @@
   addEventListener("scroll", () => {
     const y = window.scrollY;
     nav.classList.toggle("is-scrolled", y > 10);
-    if (y > lastY + 6 && y > 160) nav.classList.add("is-hidden");
+    if (y > lastY + 6 && y > 160 && !menu.classList.contains("is-open")) nav.classList.add("is-hidden");
     else if (y < lastY - 6 || y < 160) nav.classList.remove("is-hidden");
     lastY = y;
     kick();
@@ -237,20 +192,20 @@
   const tag = cursor.querySelector(".cursor__tag");
   const pos = { x: -100, y: -100, on: false };
 
-  const cursorRefresh = () => {
+  function cursorRefresh() {
     if (!pos.on) return;
     const el = document.elementFromPoint(pos.x, pos.y);
     if (!el) return;
     const sec = el.closest("[data-theme]");
-    const ink = !sec || sec.dataset.theme === "ink";
-    cursor.style.setProperty("--c", ink ? "#f2f0ea" : "#1f2fd1");
-    cursor.style.setProperty("--c2", ink ? "#1f2fd1" : "#f2f0ea");
+    const ink = sec && sec.dataset.theme === "ink";
+    cursor.style.setProperty("--c", ink ? "#f2f0ea" : "#1c25b0");
+    cursor.style.setProperty("--c2", ink ? "#1c25b0" : "#f2f0ea");
 
     const t = el.closest("[data-cursor]");
     if (t) tag.textContent = t.dataset.cursor;
     cursor.classList.toggle("is-tag", !!t);
     cursor.classList.toggle("is-link", !t && !!el.closest("a, button, [role='button']"));
-  };
+  }
 
   if (fine) {
     let pending = false;
@@ -262,11 +217,6 @@
         pos.on = true;
         root.classList.add("has-cursor");
         cursor.classList.add("is-visible");
-      }
-      if (window.scrollY < hero.offsetHeight) {
-        m.tx = e.clientX / innerWidth - 0.5;
-        m.ty = e.clientY / innerHeight - 0.5;
-        if (!reduce) kick();
       }
       if (pending) return;
       pending = true;
@@ -283,51 +233,22 @@
     document.addEventListener("mouseenter", () => { if (pos.on) cursor.classList.add("is-visible"); });
   }
 
-  /* ---------- Rebuild the hero island ---------- */
-
-  let seed = Number(heroHost.dataset.seed);
-  heroArt.setAttribute("role", "button");
-  heroArt.setAttribute("tabindex", "0");
-  heroArt.setAttribute("aria-label", "Rebuild the illustration");
-
-  const rebuild = () => {
-    seed += 1 + Math.floor(Math.random() * 97);
-    if (reduce) return draw(heroHost, seed);
-    heroHost.classList.add("is-leaving");
-    setTimeout(() => {
-      heroHost.classList.remove("is-in");
-      heroHost.style.setProperty("--vox-delay", "0ms");
-      draw(heroHost, seed);
-      heroHost.classList.remove("is-leaving");
-      void heroHost.offsetWidth;
-      requestAnimationFrame(() => heroHost.classList.add("is-in"));
-    }, 260);
-  };
-
-  heroArt.addEventListener("click", rebuild);
-  heroArt.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      rebuild();
-    }
-  });
-
   /* ---------- Go ---------- */
 
   const layout = () => {
-    fitName();
     setSticky();
     kick();
   };
 
+  let started = false;
   const ready = () => {
+    if (started) return;
+    started = true;
     layout();
-    requestAnimationFrame(() => {
-      body.classList.add("is-ready");
-      heroHost.classList.add("is-in");
-    });
+    requestAnimationFrame(() => body.classList.add("is-ready"));
   };
 
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(ready);
+  setTimeout(ready, 1200);
   addEventListener("resize", layout);
 })();
