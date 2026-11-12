@@ -12,9 +12,8 @@ GitHub Pages publiceert vanaf de branch `claude/magical-mendel-mqf5do` (root). E
 | --- | --- |
 | `index.html` | De pagina: hero, work, services, about, contact |
 | `style.css` | Alle styling |
-| `main.js` | Menu, animaties, filters, cursor, hero-overgang |
-| `world.js` | De live 3D-blokwereld in het hero-venster (WebGL2). Plek voor een showreel later |
-| `voxel.js` | Reservebeeld als een browser geen WebGL2 heeft |
+| `main.js` | Menu, klok, animaties, filters, cursor, hero-overgang |
+| `voxel.js` | Blok-eiland als SVG, alleen nog gebruikt door de studies in `lab/` |
 | `diorama.js`, `assets/vendor/three.min.js` | 3D-eiland (Three.js, MIT) voor hero-studie A en de placeholder-renders |
 | `assets/placeholders/` | Gerenderde 3D-plaatjes in de projectkaarten en bij About, tot er echte screenshots zijn |
 | `lab/` | Drie hero-studies om te vergelijken (A diorama, B typografie, C showcase) en de render-helper |

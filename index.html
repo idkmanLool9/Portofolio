@@ -64,22 +64,14 @@
           </div>
         </div>
 
-        <figure class="frame" data-theme="ink" aria-label="A voxel landscape, rendered live as a placeholder for the showreel">
-          <canvas aria-hidden="true"></canvas>
-        </figure>
-
         <div class="strip grid">
-          <div class="strip__a rise" style="--d: 500ms" data-live>
-            <button class="play" type="button" aria-pressed="false"><i aria-hidden="true"></i><span>Pause</span></button>
-            <span class="soft">Real-time scene, rendered in your browser</span>
-          </div>
-          <ul class="strip__b rise" style="--d: 560ms" aria-label="Disciplines">
+          <p class="strip__a rise" style="--d: 320ms"><i class="dot" aria-hidden="true"></i>Open for commissions</p>
+          <ul class="strip__b rise" style="--d: 380ms" aria-label="Disciplines">
             <li>Scripting</li><li>Building</li><li>Modeling</li><li>UI</li>
           </ul>
-          <p class="strip__c rise" style="--d: 620ms">Open for commissions <span class="soft">&nbsp;CET (UTC+1)</span></p>
+          <p class="strip__c rise" style="--d: 440ms"><span class="soft">Local time</span>&nbsp;<span data-clock>--:--</span> CET</p>
         </div>
       </div>
-      <div class="hero__shade" aria-hidden="true"></div>
     </section>
 
     <div class="sheet">
@@ -227,8 +219,6 @@
     </div>
   </main>
 
-  <script src="voxel.js"></script>
-  <script src="world.js" defer></script>
   <script src="main.js" defer></script>
 </body>
 </html>

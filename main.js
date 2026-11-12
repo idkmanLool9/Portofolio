@@ -24,6 +24,20 @@
     }
   });
 
+  /* ---------- Local time ---------- */
+
+  const clock = document.querySelector("[data-clock]");
+  if (clock) {
+    const fmt = new Intl.DateTimeFormat("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "Europe/Amsterdam", // change to your own zone
+    });
+    const tick = () => { clock.textContent = fmt.format(new Date()); };
+    tick();
+    setInterval(tick, 15000);
+  }
+
   /* ---------- Odometers ---------- */
 
   document.querySelectorAll(".odo").forEach((el) => {
@@ -138,7 +152,6 @@
   const nav = document.querySelector(".nav");
   const hero = document.querySelector(".hero");
   const heroInner = hero.querySelector(".hero__inner");
-  const shade = hero.querySelector(".hero__shade");
   const themed = [...document.querySelectorAll("main section[data-theme], footer[data-theme]")];
   const themeMeta = document.querySelector('meta[name="theme-color"]');
   let lastY = window.scrollY;
@@ -169,7 +182,6 @@
     if (!reduce && hero.classList.contains("is-sticky") && y < h * 1.1) {
       const p = clamp(y / h, 0, 1);
       heroInner.style.transform = `translate3d(0, ${-p * 5}vh, 0) scale(${1 - p * 0.04})`;
-      shade.style.opacity = String(p * 0.22);
     }
     navTheme();
   };
