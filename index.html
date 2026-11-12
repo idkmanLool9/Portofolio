@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio · drie richtingen</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
+  <style>
+    :root {
+      --bg: #f3f2ef;
+      --ink: #141414;
+      --mute: #8a877f;
+      --rule: rgba(20, 20, 20, 0.14);
+      --pad: clamp(18px, 2.4vw, 40px);
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 400 15px/1.45 "Archivo", "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, p { margin: 0; font-weight: inherit; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
+      padding: 18px var(--pad);
+      border-bottom: 1px solid var(--rule);
+      font-size: 13px;
+    }
+    header span:last-child { color: var(--mute); }
+
+    .intro {
+      padding: clamp(56px, 8vw, 120px) var(--pad) clamp(40px, 5vw, 72px);
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 0 20px;
+    }
+    .intro h1 {
+      grid-column: 1 / span 7;
+      font-size: clamp(40px, 5.4vw, 92px);
+      font-stretch: 72%;
+      font-weight: 560;
+      letter-spacing: -0.03em;
+      line-height: 0.92;
+    }
+    .intro p {
+      grid-column: 9 / span 4;
+      align-self: end;
+      color: var(--mute);
+      max-width: 38ch;
+    }
+
+    .list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(28px, 3vw, 48px) 20px;
+      padding: 0 var(--pad) clamp(80px, 8vw, 140px);
+    }
+
+    .item { display: block; }
+    .shot {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #e3e1dc;
+      border-radius: 3px;
+      box-shadow: 0 0 0 1px var(--rule);
+    }
+    .shot img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 700ms var(--ease-out);
+    }
+    .meta {
+      display: grid;
+      grid-template-columns: 2.6rem 1fr auto;
+      align-items: baseline;
+      padding-top: 14px;
+    }
+    .meta .n { color: var(--mute); font-variant-numeric: tabular-nums; }
+    .meta h2 {
+      font-size: 24px;
+      font-stretch: 80%;
+      font-weight: 560;
+      letter-spacing: -0.02em;
+    }
+    .meta .go { font-size: 13px; }
+    .item p { margin: 6px 0 0 2.6rem; color: var(--mute); max-width: 42ch; }
+
+    @media (hover: hover) and (pointer: fine) {
+      .item:hover .shot img { transform: scale(1.02); }
+      .item:hover .go { text-decoration: underline; text-underline-offset: 3px; }
+    }
+
+    @media (max-width: 900px) {
+      .intro h1, .intro p { grid-column: 1 / -1; }
+      .intro p { margin-top: 20px; }
+      .list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span>Portfolio</span>
+    <span>Conceptfase, nog zonder werk of info</span>
+  </header>
+
+  <section class="intro">
+    <h1>Drie richtingen.<br>Kies er een.</h1>
+    <p>Elke versie is een complete site met dezelfde opbouw: intro, werk, over, contact. Alle tekst is placeholder. Open ze ook op je telefoon.</p>
+  </section>
+
+  <main class="list">
+    <a class="item" href="concepts/01-ledger/">
+      <div class="shot"><img src="assets/previews/01-ledger.jpg" alt="Voorbeeld van Ledger" loading="lazy"></div>
+      <div class="meta"><span class="n">01</span><h2>Ledger</h2><span class="go">Bekijk</span></div>
+      <p>Licht en redactioneel. Smalle grotesk, strak grid, werk als index waarbij een preview met de muis meeloopt.</p>
+    </a>
+    <a class="item" href="concepts/02-reel/">
+      <div class="shot"><img src="assets/previews/02-reel.jpg" alt="Voorbeeld van Reel" loading="lazy"></div>
+      <div class="meta"><span class="n">02</span><h2>Reel</h2><span class="go">Bekijk</span></div>
+      <p>Donker en filmisch. Serif met cursief, showreel bovenaan, grote beeldvlakken voor renders en gameplay.</p>
+    </a>
+    <a class="item" href="concepts/03-signal/">
+      <div class="shot"><img src="assets/previews/03-signal.jpg" alt="Voorbeeld van Signal" loading="lazy"></div>
+      <div class="meta"><span class="n">03</span><h2>Signal</h2><span class="go">Bekijk</span></div>
+      <p>Eén inktkleur op warm papier. Je naam groot en breed, projecten als kaarten, cijfers als visits prominent.</p>
+    </a>
+  </main>
+</body>
+</html>
